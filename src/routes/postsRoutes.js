@@ -4,7 +4,7 @@ import validateAuthorization from "../middlewares/validateAuthorizationMiddlewar
 
 const router = Router();
 
-router.use(validateAuthorization);
+//router.use(validateAuthorization);
 
 router.post("/posts", postNewPost);
 router.get("/posts", getPosts);
