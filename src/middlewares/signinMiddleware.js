@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 export async function signinValidation(req, res, next) {
 
     const dataSignin = req.body;
+    console.log("dataSignin", dataSignin);
 
     try {
 
@@ -16,6 +17,8 @@ export async function signinValidation(req, res, next) {
         }
 
         const userExist = await connectionDB.query("SELECT * FROM users WHERE email=$1", [dataSignin.email]);
+
+        console.log("userExist", userExist);
 
         if (userExist.rowCount === 0) {
             return res.sendStatus(409);
