@@ -17,7 +17,7 @@ export async function signupValidation(req, res, next) {
         const userExist = await connectionDB.query("SELECT * FROM users WHERE email=$1", [dataSignup.email]);
 
         if (userExist.rowCount > 0) {
-            return res.sendStatus(409);
+            return res.status(409).send("E-mail já cadastrado :)");
         }
 
         req.dataUser = dataSignup;

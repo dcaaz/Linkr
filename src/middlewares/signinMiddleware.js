@@ -21,7 +21,7 @@ export async function signinValidation(req, res, next) {
         console.log("userExist", userExist);
 
         if (userExist.rowCount === 0) {
-            return res.sendStatus(409);
+            return res.status(409).send("E-mail incorreto, insira novamente");
         }
 
         const passwordExist = await connectionDB.query('SELECT password FROM users WHERE email=$1;', [dataSignin.email]);
@@ -31,7 +31,7 @@ export async function signinValidation(req, res, next) {
         const passwordOk = bcrypt.compareSync(dataSignin.password, passwordCrypted);
 
         if (!passwordOk) {
-            return res.sendStatus(401);
+            return res.status(401).send("Senha incorreta, insira novamente");;
         };
 
         req.dataUser = dataSignin;
