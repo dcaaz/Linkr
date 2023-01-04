@@ -17,6 +17,15 @@ const PostsRepository = {
         );
         return post.rows;
     },
+    selectPosts: async ({ limit }) => {
+        const posts = await connectionDB.query(
+            `SELECT *
+            FROM posts
+            LIMIT $1;`,
+            [limit]
+        );
+        return posts.rows;
+    },
 };
 
 export default PostsRepository;
