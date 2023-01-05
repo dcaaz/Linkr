@@ -1,34 +1,40 @@
 {
-  "name": "linkr-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "type": "module",
-  "scripts": {
-    "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dcaaz/Linkr-Backend.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dcaaz/Linkr-Backend/issues"
-  },
-  "homepage": "https://github.com/dcaaz/Linkr-Backend#readme",
-  "dependencies": {
-    "bcrypt": "^5.1.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "joi": "^17.7.0",
-    "pg": "^8.8.0",
-    "uuid": "^9.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
+    "name": "linkr-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/index.js",
+    "type": "module",
+    "scripts": {
+        "dev": "nodemon src/server.js",
+        "start": "node src/server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dcaaz/Linkr-Backend.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/dcaaz/Linkr-Backend/issues"
+    },
+    "homepage": "https://github.com/dcaaz/Linkr-Backend#readme",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "got": "^12.5.3",
+        "joi": "^17.7.0",
+        "metascraper": "^5.33.3",
+        "metascraper-description": "^5.33.3",
+        "metascraper-image": "^5.33.3",
+        "metascraper-title": "^5.33.3",
+        "metascraper-url": "^5.33.3",
+        "pg": "^8.8.0",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    }
 }
