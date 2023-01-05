@@ -1,9 +1,16 @@
 import HashtagsRepository from "../repositories/hashtagsRepository.js";
 import PostsRepository from "../repositories/postsRepository.js";
+import got from "got";
+import _metascraper from "metascraper";
+import description from "metascraper-description";
+import image from "metascraper-image";
+import title from "metascraper-title";
+import url from "metascraper-url";
 
 const { selectHashtagByName, insertNewHashtag, insertNewHashtagOnPost } =
     HashtagsRepository;
-const { insertNewPost, selectPostByDescription, selectPosts } = PostsRepository;
+const { insertNewPost, selectPostByDescription, selectPosts, selectPostById } =
+    PostsRepository;
 
 export async function postNewPost(req, res) {
     const { link, description } = req.body;
@@ -60,5 +67,22 @@ export async function getPosts(req, res) {
     } catch (err) {
         console.error(err);
         res.status(500).send(err.message);
+    }
+}
+
+export async function getLinkMetadata(req, res) {
+    const { id: postId } = req.params;
+    const metascraper = _metascraper([description(), image(), title(), url()]);
+
+    try {
+        const { link } = await selectPostById(postId);
+
+        const { body: html, url } = await got(link);
+
+        const metadata = await metascraper({ html, url });
+
+        res.send(metadata);
+    } catch (err) {
+        console.log(err);
     }
 }

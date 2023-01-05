@@ -21,10 +21,21 @@ const PostsRepository = {
         const posts = await connectionDB.query(
             `SELECT *
             FROM posts
+            ORDER BY id
+            DESC
             LIMIT $1;`,
             [limit]
         );
         return posts.rows;
+    },
+    selectPostById: async (id) => {
+        const post = await connectionDB.query(
+            `SELECT *
+            FROM posts
+            WHERE id = $1;`,
+            [id]
+        );
+        return post.rows[0];
     },
 };
 
