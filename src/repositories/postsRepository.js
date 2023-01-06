@@ -37,6 +37,14 @@ const PostsRepository = {
         );
         return post.rows[0];
     },
+    updatePostDescription: async (id, description) => {
+        await connectionDB.query(
+            `UPDATE posts
+            SET description = $1
+            WHERE id = $2;`,
+            [description, id]
+        );
+    },
 };
 
 export default PostsRepository;

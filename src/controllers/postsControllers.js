@@ -7,10 +7,19 @@ import image from "metascraper-image";
 import title from "metascraper-title";
 import url from "metascraper-url";
 
-const { selectHashtagByName, insertNewHashtag, insertNewHashtagOnPost } =
-    HashtagsRepository;
-const { insertNewPost, selectPostByDescription, selectPosts, selectPostById } =
-    PostsRepository;
+const {
+    selectHashtagByName,
+    insertNewHashtag,
+    insertNewHashtagOnPost,
+    deleteHashtagsOnPost,
+} = HashtagsRepository;
+const {
+    insertNewPost,
+    selectPostByDescription,
+    selectPosts,
+    selectPostById,
+    updatePostDescription,
+} = PostsRepository;
 
 export async function postNewPost(req, res) {
     const { link, description } = req.body;
@@ -84,5 +93,50 @@ export async function getLinkMetadata(req, res) {
         res.send(metadata);
     } catch (err) {
         console.log(err);
+        res.status(500).send(err.message);
+    }
+}
+
+export async function updatePost(req, res) {
+    const { id: postId } = req.params;
+    const { description } = req.body;
+
+    try {
+        await updatePostDescription(postId, description);
+
+        await deleteHashtagsOnPost(postId);
+
+        const hashtags = [];
+        let inicio, fim;
+        for (let i = 0; i <= description.length; i++) {
+            const letter = description[i];
+
+            if (letter === "#") inicio = i;
+
+            if (
+                inicio !== undefined &&
+                (letter === " " || i === description.length)
+            ) {
+                fim = i;
+                hashtags.push(description.slice(inicio, fim));
+                inicio = undefined;
+            }
+        }
+
+        hashtags.forEach(async (hashtagName) => {
+            let hashtag = await selectHashtagByName(hashtagName);
+
+            if (hashtag === undefined) {
+                await insertNewHashtag(hashtagName);
+                hashtag = await selectHashtagByName(hashtagName);
+            }
+
+            await insertNewHashtagOnPost(postId, hashtag.id);
+        });
+
+        res.sendStatus(200);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err.message);
     }
 }
