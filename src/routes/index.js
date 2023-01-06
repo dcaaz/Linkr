@@ -7,16 +7,16 @@ import validateAuthorization from "../middlewares/validateAuthorizationMiddlewar
 import validateLikesBody from "../middlewares/likesMiddleware.js";
 import postsRouter from "./postsRoutes.js";
 import routeSign from "./signRoutes.js";
-import usersRouter from "./usersRoutes.js";
+import { getUserById } from "../controllers/usersController.js";
 
 const router = Router();
 
 router.use(routeSign);
 router.use("/posts", postsRouter);
-router.use("/users", usersRouter);
+router.get("/users/:id", validateAuthorization, getUserById);
 
 router.get("/hashtag/:hashtag", validateAuthorization, getPostByHashtag);
 router.get("/hashtags", validateAuthorization, getHashtags);
-router.get("/likes", validateAuthorization, validateLikesBody );
+router.get("/likes", validateAuthorization, validateLikesBody);
 
 export default router;
