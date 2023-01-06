@@ -92,7 +92,7 @@ export async function getLinkMetadata(req, res) {
 
         res.send(metadata);
     } catch (err) {
-        console.log(err);
+        console.error(err);
         res.status(500).send(err.message);
     }
 }
