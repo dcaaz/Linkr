@@ -1,4 +1,4 @@
-import connectionDB from "../database/db"
+import connectionDB from "../database/db.js";
 
 export async function getPostByHashtag(req, res) {
     const {hashtag} = req.params

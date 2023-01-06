@@ -17,6 +17,6 @@ router.use("/users", usersRouter);
 
 router.get("/hashtag/:hashtag", validateAuthorization, getPostByHashtag);
 router.get("/hashtags", validateAuthorization, getHashtags);
-router.get("/likes", validateAuthorization, validateLikesBody, toggleLikes);
+router.get("/likes", validateAuthorization, validateLikesBody );
 
 export default router;

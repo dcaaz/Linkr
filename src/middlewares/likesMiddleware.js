@@ -1,4 +1,4 @@
-import likesSchema from "../schemas/likesSchema"; 
+//import likesSchema from "../schemas/likesSchema";
  
  export default async function validateLikesBody(req, res, next) {
     const like = req.body
