@@ -5,7 +5,6 @@ import bcrypt from 'bcrypt';
 export async function signinValidation(req, res, next) {
 
     const dataSignin = req.body;
-    console.log("dataSignin", dataSignin);
 
     try {
 
@@ -18,8 +17,8 @@ export async function signinValidation(req, res, next) {
 
         const userExist = await connectionDB.query("SELECT * FROM users WHERE email=$1", [dataSignin.email]);
 
-        console.log("userExist", userExist);
-
+        const all = userExist.rows[0]
+       
         if (userExist.rowCount === 0) {
             return res.status(409).send("E-mail incorreto, insira novamente");
         }
@@ -35,6 +34,8 @@ export async function signinValidation(req, res, next) {
         };
 
         req.dataUser = dataSignin;
+        req.dataAll = all;
+        
         next();
 
     } catch (err) {
