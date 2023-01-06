@@ -24,6 +24,13 @@ const HashtagsRepository = {
             [postId, hashtagId]
         );
     },
+    deleteHashtagsOnPost: async (postId) => {
+        await connectionDB.query(
+            `DELETE FROM posts_hashtags
+            WHERE post_id = $1;`,
+            [postId]
+        );
+    },
 };
 
 export default HashtagsRepository;
