@@ -19,6 +19,7 @@ const {
     selectPosts,
     selectPostById,
     updatePostDescription,
+    deletePostFromDb,
 } = PostsRepository;
 
 export async function postNewPost(req, res) {
@@ -134,6 +135,19 @@ export async function updatePost(req, res) {
             await insertNewHashtagOnPost(postId, hashtag.id);
         });
 
+        res.sendStatus(200);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err.message);
+    }
+}
+
+export async function deletePost(req, res) {
+    const { id: postId } = req.params;
+
+    try {
+        await deleteHashtagsOnPost(postId);
+        await deletePostFromDb(postId);
         res.sendStatus(200);
     } catch (err) {
         console.error(err);

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+    deletePost,
     getLinkMetadata,
     getPosts,
     postNewPost,
@@ -15,5 +16,6 @@ router.post("", postNewPost);
 router.get("", getPosts);
 router.get("/metadata/:id", getLinkMetadata);
 router.patch("/:id", updatePost);
+router.delete("/:id", deletePost);
 
 export default router;

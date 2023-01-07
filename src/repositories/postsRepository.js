@@ -45,6 +45,13 @@ const PostsRepository = {
             [description, id]
         );
     },
+    deletePostFromDb: async (id) => {
+        await connectionDB.query(
+            `DELETE FROM posts
+            WHERE id = $1;`,
+            [id]
+        );
+    },
 };
 
 export default PostsRepository;
