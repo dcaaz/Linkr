@@ -3,6 +3,6 @@ import { getSearchClick } from "../controllers/searchClickController.js";
 
 const routeSearch = Router();
 
-routeSearch.get('/searchClick', getSearchClick);
+routeSearch.get('/search/:id', getSearchClick);
 
 export default routeSearch;

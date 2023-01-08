@@ -1,19 +1,22 @@
 import connectionDB from "../database/db.js";
 
-export function getSearchClick(req, res) {
+export async function getSearchClick(req, res) {
 
-    //lembrar de colocar async
+    const { id } = req.params
+    console.log("id", id)
     
     try {
 
 
-       // await connectionDB.query('INSERT INTO users (email, password, username, "picture_url") VALUES ($1, $2, $3, $4);',
-       //     [dataSignup.email, encryptPassword, dataSignup.username, dataSignup.picture]);
-        console.log("deu certo!")
-        return res.status(201).send("deu certo");
+        const { rows } = await connectionDB.query('SELECT * FROM posts WHERE "user_id" = $1 ',
+          [id]);
+
+        console.log("posts", rows)
+       
+        return res.status(201).send(rows);
 
     } catch (err) {
-        console.log("err postSignup", err.message);
+        console.log("err getSearchClick", err.message);
         return res.status(500).send('Server not running');
     }
 }
