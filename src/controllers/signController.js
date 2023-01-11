@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from "uuid";
 import { insertUsers, selectIdFromUsers, insertSessions } from "../repositories/signRepository.js";
+import connectionDB from '../database/db.js';
 
 export async function postSignup(req, res) {
 
