@@ -32,9 +32,6 @@ export async function postSignin(req, res) {
 
         await connectionDB.query('INSERT INTO sessions (user_id, token) VALUES ($1, $2);', [userId.rows[0].id, token]);
 
-        console.log("token", token);
-        console.log("all", all)
-        
         return res.status(200).send([ token, all]);
     }
     catch (err) {
