@@ -18,7 +18,19 @@ const UsersRepository = {
                 (SELECT * FROM follows WHERE follower_id = $1) AS f
             ON u.id = f.followed_id
             ORDER BY f.id;`,
-            [6]
+            [followerId]
+        );
+        return rows;
+    },
+    selectUsersFilteredByFollowing: async (followerId) => {
+        const { rows } = await connectionDB.query(
+            `SELECT *
+            FROM users AS u
+            JOIN
+                (SELECT * FROM follows WHERE follower_id = $1) AS f
+            ON u.id = f.followed_id
+            ORDER BY f.id;`,
+            [followerId]
         );
         return rows;
     },

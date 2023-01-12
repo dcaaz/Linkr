@@ -20,6 +20,7 @@ const {
     selectPostById,
     updatePostDescription,
     deletePostFromDb,
+    selectPostsByFollowing,
 } = PostsRepository;
 
 export async function postNewPost(req, res) {
@@ -157,6 +158,18 @@ export async function deletePost(req, res) {
         await deleteHashtagsOnPost(postId);
         await deletePostFromDb(postId);
         res.sendStatus(200);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err.message);
+    }
+}
+
+export async function getPostsByFollowing(req, res) {
+    const { user_id: followerId } = res.locals.session;
+
+    try {
+        const posts = await selectPostsByFollowing({ limit: 20, followerId });
+        res.send(posts);
     } catch (err) {
         console.error(err);
         res.status(500).send(err.message);

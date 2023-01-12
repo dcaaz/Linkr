@@ -52,6 +52,19 @@ const PostsRepository = {
             [id]
         );
     },
+    selectPostsByFollowing: async ({ followerId, limit }) => {
+        const posts = await connectionDB.query(
+            `SELECT *
+            FROM posts
+            WHERE user_id IN (
+                SELECT followed_id
+                FROM follows
+                WHERE follower_id = $1)
+            LIMIT $2;`,
+            [followerId, limit]
+        );
+        return posts.rows;
+    },
 };
 
 export default PostsRepository;
