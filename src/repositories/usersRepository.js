@@ -10,10 +10,15 @@ const UsersRepository = {
         );
         return rows[0];
     },
-    selectAllUsers: async () => {
+    selectUsersOrderByFollowing: async (followerId) => {
         const { rows } = await connectionDB.query(
-            `SELECT *
-            FROM users;`
+            `SELECT u.id, u.username, u.picture_url, f.follower_id
+            FROM users AS u
+            LEFT JOIN
+                (SELECT * FROM follows WHERE follower_id = $1) AS f
+            ON u.id = f.followed_id
+            ORDER BY f.id;`,
+            [6]
         );
         return rows;
     },
