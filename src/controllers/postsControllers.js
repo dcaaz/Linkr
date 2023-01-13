@@ -94,7 +94,15 @@ export async function getLinkMetadata(req, res) {
         res.send(metadata);
     } catch (err) {
         console.error(err);
-        res.status(500).send(err.message);
+
+        const post = await selectPostById(postId);
+
+        res.send({
+            description: "",
+            image: undefined,
+            title: "",
+            url: post.link,
+        });
     }
 }
 
